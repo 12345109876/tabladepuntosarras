@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArrasAdolecentes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: linear-gradient(to bottom, #6699ff, #abcc33);
+            margin: 0;
+            padding: 0;
+            color: #333; /* Cambiado a un color más oscuro para una mejor legibilidad */
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1, h2 {
+            color: #fff;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px auto;
+            background-color: #f9f9f9;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #3366cc;
+            color: #fff;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .top3 {
+            font-weight: bold;
+            color: #ff6600;
+        }
+
+        #top3 {
+            list-style: none;
+            padding: 0;
+            text-align: center;
+        }
+
+        #top3 li {
+            margin-bottom: 5px;
+            color: #3366cc;
+        }
+
+        #btn-ordenar {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #3366cc;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #btn-ordenar:hover {
+            background-color: #2554a5;
+        }
+
+        #header-image {
+            display: block;
+            margin: 0 auto 20px;
+            max-width: 100%;
+        }
+
+        /* Estilo para las imágenes a los costados de la tabla */
+        .side-images {
+            display: flex;
+            justify-content: space-around; /* Cambiado de space-between a space-around */
+            margin-bottom: 20px;
+        }
+
+        .side-image {
+            width: 100px; /* Ajusta el tamaño según sea necesario */
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="side-images">
+            <!-- Imagen a la izquierda de la tabla -->
+            <img src="c:\Users\gilbe\Downloads\Premium PSD _ Little boy jumping with a happy expression3d cartoon of a little boy running happily generative ai.jpeg" alt="Imagen Izquierda" class="side-image">
+
+            <!-- Imagen a la derecha de la tabla -->
+            <img src="c:\Users\gilbe\Downloads\First Day of School.jpeg" alt="Imagen Derecha" class="side-image">
+        </div>
+
+        <img src="c:\Users\gilbe\Downloads\Dinámicas para adolescentes con enseñanza (2).jpeg" alt="Header Image" id="header-image" style="width: 400px; height: 200px;">
+
+        <h1>Tabla de Puntos</h1>
+        <button id="btn-ordenar">Ordenar por Puntos</button>
+        <table id="puntos">
+            <tr>
+                <th>Jugador</th>
+                <th>Puntos</th>
+            </tr>
+            <!-- Aquí se generará dinámicamente la tabla de puntajes -->
+        </table>
+
+        <h2>Top 3</h2>
+        <ol id="top3">
+            <!-- Aquí se mostrarán dinámicamente los tres mejores puntajes -->
+        </ol>
+    </div>
+
+    <script>
+        // Datos de ejemplo de puntajes
+        var puntajes = [
+            { jugador: "lucas", puntos: 6 },
+            { jugador: "jazmin", puntos: 3},
+            { jugador: "Araceli", puntos: 5},
+            { jugador: "Abi", puntos: 6 },
+            { jugador: "Milca", puntos: 3},
+            { jugador: "Agustin", puntos: 4 },
+            { jugador: "Ana", puntos: 4},
+            { jugador: "Helen", puntos: 6},
+            { jugador: "Pedro", puntos: 2},
+            { jugador: "Mathi", puntos: 2},
+            { jugador: "Misael", puntos: 3},
+            { jugador: "Zhiomara", puntos: 3 },
+            { jugador: "Valeria", puntos: 3 },
+            { jugador: "Eliana", puntos: 5},
+        
+        ];
+
+        // Función para cargar la tabla de puntajes
+        function cargarTablaPuntos() {
+            var tabla = document.getElementById("puntos");
+            // Limpiar tabla antes de cargar los datos
+            tabla.innerHTML = `
+                <tr>
+                    <th>Jugador</th>
+                    <th>Puntos</th>
+                </tr>
+            `;
+            for (var i = 0; i < puntajes.length; i++) {
+                var fila = tabla.insertRow();
+                var celdaJugador = fila.insertCell(0);
+                var celdaPuntos = fila.insertCell(1);
+                celdaJugador.innerHTML = puntajes[i].jugador;
+                celdaPuntos.innerHTML = puntajes[i].puntos;
+            }
+        }
+
+        // Función para mostrar los tres mejores puntajes
+        function mostrarTop3() {
+            var top3 = puntajes.slice(0, 3);
+            var listaTop3 = document.getElementById("top3");
+            listaTop3.innerHTML = ""; // Limpiar lista antes de agregar los datos
+            for (var i = 0; i < top3.length; i++) {
+                var listItem = document.createElement("li");
+                if (i === 0) {
+                    listItem.classList.add("top3");
+                }
+                listItem.innerHTML = `${top3[i].jugador}: ${top3[i].puntos}`;
+                listaTop3.appendChild(listItem);
+            }
+        }
+
+        // Función para ordenar los puntajes por cantidad de puntos
+        function ordenarPorPuntos() {
+            puntajes.sort((a, b) => b.puntos - a.puntos);
+            cargarTablaPuntos();
+            mostrarTop3();
+        }
+
+        // Cargar la tabla de puntajes, mostrar el top 3 y añadir el evento de clic al botón de ordenar
+        window.onload = function() {
+            cargarTablaPuntos();
+            mostrarTop3();
+            document.getElementById("btn-ordenar").addEventListener("click", ordenarPorPuntos);
+        };
+    </script>
+</body>
+</html>
